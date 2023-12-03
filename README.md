@@ -48,7 +48,7 @@ Build the Docker Image
 
 Start the container  
 ```
-  docker run -d --name xdork -v /Users/jag/Git/ExploreK3s/.kube:/root/.kube -v /Users/jag/Git/ExploreK3s/k3s:/k3s xdork
+  docker run -d --name xdork -v /Users/jag/Git/HomeLab/.kube:/root/.kube -v /Users/jag/Git/HomeLab/k3s:/k3s xdork
 ```
 
 Attach shell to the container

@@ -7,12 +7,7 @@ scratch*.*
 secrets
 .unsorted
 cert-manager
-dashboard
 configmaps
-duck-dns
-ingress-routes
 jenkins
 jenkins-agent
-longhorn
-namespaces
 roles

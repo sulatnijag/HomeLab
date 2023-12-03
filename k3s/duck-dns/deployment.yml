@@ -1,0 +1,30 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: duck-dns
+  namespace: duck-dns
+spec:
+  selector:
+    matchLabels:
+      app: duck-dns
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: duck-dns
+    spec:
+      containers:
+      - name: duck-dns
+        image: lscr.io/linuxserver/duckdns:latest
+        ports:
+        - containerPort: 80
+        env:
+        - name: SUBDOMAINS
+          value: "steamed,ninety,xdork,xdork-ci,xdork-drive"
+        - name: TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: duckdns-secrets
+              key: DUCK_DNS_TOKEN
+

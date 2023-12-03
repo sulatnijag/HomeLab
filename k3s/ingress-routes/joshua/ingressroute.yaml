@@ -1,0 +1,28 @@
+
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: stripprefix-node-app
+spec:
+  stripPrefix:
+    prefixes:
+      - /node-app
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: node-app
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: "Host(`xdork.duckdns.org`) && PathPrefix(`/node-app/`)"
+      services:
+        - kind: Service
+          name: node-app
+          port: 3000
+      middlewares:
+      - name: stripprefix-node-app

@@ -1,0 +1,46 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: stripprefix
+  namespace: longhorn-system
+spec:
+  stripPrefix:
+    prefixes:
+      - /longhorn
+
+
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: auth
+  namespace: longhorn-system
+spec:
+  basicAuth:
+    secret: auth
+
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: longhorn
+  namespace: longhorn-system
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`xdork.duckdns.org`) && PathPrefix(`/longhorn/`)
+      services:
+        - kind: Service
+          name: longhorn-frontend
+          #passHostHeader: true
+          port: 80
+      middlewares:
+      - name: stripprefix
+      - name: auth
+  tls:
+    secretName: xdork
